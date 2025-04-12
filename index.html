@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متابعة الأدوية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="description" content="تطبيق لمتابعة مواعيد الأدوية والجرعات">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-pills"></i> متابعة الأدوية</h1>
+            <button id="addMedicineBtn" class="btn-primary">
+                <i class="fas fa-plus"></i> إضافة دواء جديد
+            </button>
+        </header>
+
+        <main>
+            <!-- قائمة الأدوية -->
+            <div class="medicines-list" id="medicinesList">
+                <!-- سيتم إضافة البطاقات هنا عبر JavaScript -->
+            </div>
+
+            <!-- نموذج إضافة دواء جديد -->
+            <div class="modal" id="addMedicineModal">
+                <div class="modal-content">
+                    <h2>إضافة دواء جديد</h2>
+                    <form id="addMedicineForm">
+                        <div class="form-group">
+                            <label for="medicineName">اسم الدواء</label>
+                            <input type="text" id="medicineName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dosage">الجرعة</label>
+                            <input type="text" id="dosage" placeholder="مثال: حبة واحدة" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="frequency">عدد المرات</label>
+                            <select id="frequency" required>
+                                <option value="daily">يومياً</option>
+                                <option value="weekly">أسبوعياً</option>
+                                <option value="monthly">شهرياً</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="times">أوقات الجرعات</label>
+                            <div id="timesContainer">
+                                <input type="time" class="time-input" required>
+                                <button type="button" class="btn-secondary add-time">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">ملاحظات</label>
+                            <textarea id="notes" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="submit" class="btn-primary">حفظ</button>
+                            <button type="button" class="btn-secondary" id="cancelAdd">إلغاء</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered successfully');
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed:', error);
+                    });
+            });
+        }
+
+        // منع السحب للتحديث على iOS
+        let touchStartY = 0;
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: false });
+
+        document.addEventListener('touchmove', e => {
+            const touchY = e.touches[0].clientY;
+            const touchDiff = touchStartY - touchY;
+            
+            // منع السحب للأسفل في بداية الصفحة
+            if (window.scrollY === 0 && touchDiff < 0) {
+                e.preventDefault();
+            }
+            
+            // منع السحب للأعلى في نهاية الصفحة
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight && touchDiff > 0) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // منع تكبير الصفحة بالضغط المزدوج
+        document.addEventListener('gesturestart', e => {
+            e.preventDefault();
+        });
+
+        // طلب إذن التنبيهات عند بدء التطبيق
+        if ('Notification' in window) {
+            Notification.requestPermission();
+        }
+    </script>
+</body>
+</html>
