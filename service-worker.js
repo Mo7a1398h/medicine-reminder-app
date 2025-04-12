@@ -1,19 +1,19 @@
 const CACHE_NAME = 'medicine-reminder-v1';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/script.js',
-    '/manifest.json',
-    '/notification.mp3',
-    '/icons/icon-72x72.png',
-    '/icons/icon-96x96.png',
-    '/icons/icon-128x128.png',
-    '/icons/icon-144x144.png',
-    '/icons/icon-152x152.png',
-    '/icons/icon-192x192.png',
-    '/icons/icon-384x384.png',
-    '/icons/icon-512x512.png'
+    './medicine-reminder-app/',
+    './medicine-reminder-app/index.html',
+    './medicine-reminder-app/style.css',
+    './medicine-reminder-app/script.js',
+    './medicine-reminder-app/manifest.json',
+    './medicine-reminder-app/notification.mp3',
+    './medicine-reminder-app/icons/icon-72x72.png',
+    './medicine-reminder-app/icons/icon-96x96.png',
+    './medicine-reminder-app/icons/icon-128x128.png',
+    './medicine-reminder-app/icons/icon-144x144.png',
+    './medicine-reminder-app/icons/icon-152x152.png',
+    './medicine-reminder-app/icons/icon-192x192.png',
+    './medicine-reminder-app/icons/icon-384x384.png',
+    './medicine-reminder-app/icons/icon-512x512.png'
 ];
 
 // تثبيت Service Worker

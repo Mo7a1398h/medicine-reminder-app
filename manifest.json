@@ -2,7 +2,7 @@
     "name": "متابعة الأدوية",
     "short_name": "الأدوية",
     "description": "تطبيق لمتابعة مواعيد الأدوية والجرعات",
-    "start_url": "/",
+    "start_url": "/medicine-reminder-app/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#4CAF50",
