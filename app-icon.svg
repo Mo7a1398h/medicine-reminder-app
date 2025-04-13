@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+    <!-- خلفية دائرية متدرجة -->
+    <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#007AFF;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#5856D6;stop-opacity:1" />
+        </linearGradient>
+        <filter id="shadow">
+            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.2"/>
+        </filter>
+    </defs>
+    
+    <!-- خلفية دائرية -->
+    <circle cx="256" cy="256" r="240" fill="url(#grad)" filter="url(#shadow)" />
+    
+    <!-- رمز الدواء -->
+    <g fill="white" transform="translate(106, 106) scale(0.6)">
+        <!-- قارورة الدواء -->
+        <path d="M352 0H160c-17.7 0-32 14.3-32 32v96h96v24c0 30.9 25.1 56 56 56h48c30.9 0 56-25.1 56-56v-24h96V32c0-17.7-14.3-32-32-32zM152 384V256H72c-22.1 0-40 17.9-40 40v168c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V296c0-22.1-17.9-40-40-40h-80v128c0 13.3-10.7 24-24 24H176c-13.3 0-24-10.7-24-24zm0-144v24c0 13.3 10.7 24 24 24h160c13.3 0 24-10.7 24-24v-24h-48c-4.4 0-8-3.6-8-8v-40h-96v40c0 4.4-3.6 8-8 8h-48z"/>
+        <!-- علامة + -->
+        <circle cx="256" cy="320" r="48" fill="#007AFF"/>
+        <rect x="244" y="284" width="24" height="72" rx="12" fill="white"/>
+        <rect x="220" y="308" width="72" height="24" rx="12" fill="white"/>
+    </g>
+</svg>
