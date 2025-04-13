@@ -15,7 +15,96 @@
     --border-radius: 12px;
     --shadow: 0 2px 10px rgba(0,0,0,0.05);
     --bottom-bar-height: 60px;
-    --gradient-background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+/* أنماط الخلفيات والأزرار */
+
+/* أزرار اختيار المظهر */
+.theme-colors {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.theme-color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    margin: 0 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: var(--surface-color);
+}
+
+.theme-color.active {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.theme-color:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.theme-color i {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-color.active i {
+    opacity: 1;
+}
+
+/* الخلفيات المتدرجة */
+.theme-blue {
+    background: linear-gradient(135deg, #007AFF, #5856D6) fixed !important;
+}
+
+.theme-purple {
+    background: linear-gradient(135deg, #5856D6, #AF52DE) fixed !important;
+}
+
+.theme-pink {
+    background: linear-gradient(135deg, #FF2D55, #FF375F) fixed !important;
+}
+
+.theme-orange {
+    background: linear-gradient(135deg, #FF9500, #FF3B30) fixed !important;
+}
+
+.theme-green {
+    background: linear-gradient(135deg, #34C759, #30B0C7) fixed !important;
+}
+
+/* أنماط الأزرار */
+.theme-color[data-theme="theme-blue"] {
+    background: linear-gradient(135deg, #007AFF, #5856D6);
+}
+
+.theme-color[data-theme="theme-purple"] {
+    background: linear-gradient(135deg, #5856D6, #AF52DE);
+}
+
+.theme-color[data-theme="theme-pink"] {
+    background: linear-gradient(135deg, #FF2D55, #FF375F);
+}
+
+.theme-color[data-theme="theme-orange"] {
+    background: linear-gradient(135deg, #FF9500, #FF3B30);
+}
+
+.theme-color[data-theme="theme-green"] {
+    background: linear-gradient(135deg, #34C759, #30B0C7);
 }
 
 /* الأساسيات */

@@ -709,28 +709,38 @@ function updateQuantity(id, newQuantity) {
 
 // إعداد أزرار الألوان
 document.querySelectorAll('.theme-color').forEach(button => {
-    const gradient = button.dataset.gradient;
-    button.style.setProperty('--gradient', gradient);
-    
+    const theme = button.dataset.theme;
     button.addEventListener('click', () => {
+        // إزالة جميع الأنماط السابقة
+        document.body.classList.remove('theme-blue', 'theme-purple', 'theme-pink', 'theme-orange', 'theme-green');
+        // إضافة النمط الجديد
+        document.body.classList.add(theme);
         // إزالة التنشيط من جميع الأزرار
         document.querySelectorAll('.theme-color').forEach(btn => btn.classList.remove('active'));
-        
         // تنشيط الزر المختار
         button.classList.add('active');
-        
-        // تطبيق التدرج اللوني على الخلفية
-        document.documentElement.style.setProperty('--gradient-background', gradient);
-        
-        // إعادة تطبيق الخلفية للتأكد من التغيير
-        document.body.style.background = gradient;
-        
-        // حفظ التفضيل في localStorage
-        localStorage.setItem('theme-gradient', gradient);
+        // حفظ النمط في التخزين المحلي
+        localStorage.setItem('theme', theme);
     });
 });
 
-// استعادة التفضيل المحفوظ
+// استعادة النمط المحفوظ
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.body.classList.add(savedTheme);
+    // تنشيط الزر المناسب
+    const activeButton = document.querySelector(`.theme-color[data-theme="${savedTheme}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+} else {
+    // النمط الافتراضي
+    document.body.classList.add('theme-blue');
+    const defaultButton = document.querySelector('.theme-color[data-theme="theme-blue"]');
+    if (defaultButton) {
+        defaultButton.classList.add('active');
+    }
+}
 const savedGradient = localStorage.getItem('theme-gradient');
 if (savedGradient) {
     document.documentElement.style.setProperty('--gradient-background', savedGradient);
