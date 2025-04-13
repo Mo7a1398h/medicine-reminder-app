@@ -71,8 +71,6 @@ const addTimeInput = () => {
 function calculateNextDose(times, frequency) {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
     
     // تحويل الأوقات إلى تواريخ
     const doseTimes = times.map(time => {
@@ -82,17 +80,43 @@ function calculateNextDose(times, frequency) {
         return date;
     }).sort((a, b) => a - b);
     
-    // البحث عن أقرب موعد
-    for (const time of doseTimes) {
-        if (time > now) {
-            return time.toISOString();
+    // البحث عن أقرب موعد بناءً على التكرار
+    if (frequency === 'daily') {
+        // البحث عن أقرب موعد اليوم
+        for (const time of doseTimes) {
+            if (time > now) {
+                return time.toISOString();
+            }
         }
+        // إذا لم نجد موعداً اليوم، نضيف يوماً
+        const nextDose = new Date(doseTimes[0]);
+        nextDose.setDate(nextDose.getDate() + 1);
+        return nextDose.toISOString();
+    } else if (frequency === 'weekly') {
+        // البحث عن أقرب موعد هذا الأسبوع
+        for (const time of doseTimes) {
+            if (time > now) {
+                return time.toISOString();
+            }
+        }
+        // إذا لم نجد موعداً هذا الأسبوع، نضيف أسبوعاً
+        const nextDose = new Date(doseTimes[0]);
+        nextDose.setDate(nextDose.getDate() + 7);
+        return nextDose.toISOString();
+    } else if (frequency === 'monthly') {
+        // البحث عن أقرب موعد هذا الشهر
+        for (const time of doseTimes) {
+            if (time > now) {
+                return time.toISOString();
+            }
+        }
+        // إذا لم نجد موعداً هذا الشهر، نضيف شهراً
+        const nextDose = new Date(doseTimes[0]);
+        nextDose.setMonth(nextDose.getMonth() + 1);
+        return nextDose.toISOString();
     }
     
-    // إذا لم نجد موعداً اليوم، نضيف يوماً
-    const nextDose = new Date(doseTimes[0]);
-    nextDose.setDate(nextDose.getDate() + 1);
-    return nextDose.toISOString();
+    return doseTimes[0].toISOString();
 }
 
 // حفظ الأدوية
@@ -156,7 +180,7 @@ function renderMedicines() {
         const remainingTimeText = remainingTime ? 
             `<div class="next-dose">
                 <i class="fas fa-clock"></i>
-                الوقت المتبقي للجرعة التالية: ${remainingTime.hours} ساعة و ${remainingTime.minutes} دقيقة
+                الوقت المتبقي للجرعة التالية: ${remainingTime.hours} ساعة و ${remainingTime.minutes < 10 ? '0' : ''}${remainingTime.minutes} دقيقة
             </div>` : '';
         
         card.innerHTML = `
