@@ -98,6 +98,9 @@ function calculateNextDose(times, frequency) {
 // حفظ الأدوية
 function saveMedicines() {
     localStorage.setItem('medicines', JSON.stringify(medicines));
+    if (currentView === 'calendarView') {
+        updateCalendar();
+    }
 }
 
 // حساب الوقت المتبقي للجرعة التالية
@@ -253,7 +256,7 @@ function testSound() {
 addTimeInput();
 
 // إدارة شريط التنقل
-let currentView = 'medicines';
+let currentView = localStorage.getItem('currentView') || 'medicines';
 const views = ['medicinesView', 'calendarView', 'reportsView', 'settingsView', 'quantityView'];
 const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
 
@@ -297,6 +300,7 @@ function switchView(view) {
     }
 
     currentView = view;
+    localStorage.setItem('currentView', view);
 }
 
 // إضافة مستمعات للقائمة
@@ -428,7 +432,7 @@ function updateCalendar() {
                 const medicineItem = document.createElement('div');
                 medicineItem.className = 'medicine-item';
                 medicineItem.innerHTML = `
-                    <span class="medicine-time">${medicine.times[0]}</span>
+                    <span class="medicine-time">${medicine.times.join(', ')}</span>
                     ${medicine.name}
                 `;
                 dayContent.appendChild(medicineItem);
