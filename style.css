@@ -1278,6 +1278,57 @@ select:focus {
     }
 }
 
+/* أنماط شريط التمرير */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+    opacity: 0.8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+/* تفعيل التمرير للنوافذ */
+.medicines-list,
+.calendar-container,
+.reports-container,
+.quantity-container,
+.settings-content,
+.modal-content {
+    max-height: calc(100vh - var(--bottom-bar-height) - 60px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+/* تحسينات للأجهزة المحمولة */
+@supports (-webkit-touch-callout: none) {
+    .medicines-list,
+    .calendar-container,
+    .reports-container,
+    .quantity-container,
+    .settings-content,
+    .modal-content {
+        /* تحسين التمرير على iOS */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
 /* تحسينات للمس */
 @media (hover: none) {
     .btn:active {
