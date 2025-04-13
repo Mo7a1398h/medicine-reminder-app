@@ -542,8 +542,9 @@ nextMonthBtn.addEventListener('click', () => {
 
 // إدارة التقارير
 function updateReports() {
-    const reportsContainer = document.getElementById('reportsContainer');
-    if (!reportsContainer) return;
+    const monthlyStats = document.getElementById('monthlyStats');
+    const topMedicines = document.getElementById('topMedicines');
+    if (!monthlyStats || !topMedicines) return;
 
     // حساب إحصائيات الأدوية
     const totalMedicines = medicines.length;
@@ -557,20 +558,26 @@ function updateReports() {
         return stats;
     }, {});
 
-    // إنشاء التقرير
-    reportsContainer.innerHTML = `
-        <div class="report-card">
-            <h3>إحصائيات عامة</h3>
-            <p>عدد الأدوية: ${totalMedicines}</p>
-            <p>مجموع الجرعات اليومية: ${totalDoses}</p>
-        </div>
-        <div class="report-card">
-            <h3>التكرار</h3>
-            ${Object.entries(frequencyStats).map(([frequency, count]) => `
-                <p>${frequency === 'daily' ? 'يومياً' : 'حسب الحاجة'}: ${count}</p>
-            `).join('')}
-        </div>
+    // إنشاء التقرير الشهري
+    monthlyStats.innerHTML = `
+        <p>عدد الأدوية: ${totalMedicines}</p>
+        <p>مجموع الجرعات اليومية: ${totalDoses}</p>
+        ${Object.entries(frequencyStats).map(([frequency, count]) => `
+            <p>${frequency === 'daily' ? 'يومياً' : 'حسب الحاجة'}: ${count}</p>
+        `).join('')}
     `;
+
+    // ترتيب الأدوية حسب عدد الجرعات
+    const sortedMedicines = [...medicines].sort((a, b) => b.times.length - a.times.length);
+    const top5Medicines = sortedMedicines.slice(0, 5);
+
+    // عرض أكثر 5 أدوية استخداماً
+    topMedicines.innerHTML = top5Medicines.map(medicine => `
+        <div class="top-medicine">
+            <span class="medicine-name">${medicine.name}</span>
+            <span class="dose-count">${medicine.times.length} جرعات</span>
+        </div>
+    `).join('');
 }
 
 
