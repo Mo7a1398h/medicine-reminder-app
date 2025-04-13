@@ -281,7 +281,7 @@ addTimeInput();
 
 // إدارة شريط التنقل
 let currentView = localStorage.getItem('currentView') || 'medicines';
-const views = ['medicinesView', 'calendarView', 'reportsView', 'settingsView', 'quantityView'];
+const views = ['medicinesView', 'calendarView', 'settingsView', 'quantityView'];
 const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
 
 // تبديل العرض
@@ -315,8 +315,7 @@ function switchView(view) {
     // تحديث العرض المحدد
     if (view === 'calendarView') {
         updateCalendar();
-    } else if (view === 'reportsView') {
-        updateReports();
+
     } else if (view === 'settingsView') {
         updateMedicineSettings();
     } else if (view === 'quantityView') {
@@ -539,48 +538,6 @@ nextMonthBtn.addEventListener('click', () => {
     currentDate.setMonth(currentDate.getMonth() + 1);
     updateCalendar();
 });
-
-// إدارة التقارير
-function updateReports() {
-    const monthlyStats = document.getElementById('monthlyStats');
-    const topMedicines = document.getElementById('topMedicines');
-    if (!monthlyStats || !topMedicines) return;
-
-    // حساب إحصائيات الأدوية
-    const totalMedicines = medicines.length;
-    const totalDoses = medicines.reduce((total, medicine) => {
-        return total + medicine.times.length;
-    }, 0);
-
-    // تجميع الأدوية حسب التكرار
-    const frequencyStats = medicines.reduce((stats, medicine) => {
-        stats[medicine.frequency] = (stats[medicine.frequency] || 0) + 1;
-        return stats;
-    }, {});
-
-    // إنشاء التقرير الشهري
-    monthlyStats.innerHTML = `
-        <p>عدد الأدوية: ${totalMedicines}</p>
-        <p>مجموع الجرعات اليومية: ${totalDoses}</p>
-        ${Object.entries(frequencyStats).map(([frequency, count]) => `
-            <p>${frequency === 'daily' ? 'يومياً' : 'حسب الحاجة'}: ${count}</p>
-        `).join('')}
-    `;
-
-    // ترتيب الأدوية حسب عدد الجرعات
-    const sortedMedicines = [...medicines].sort((a, b) => b.times.length - a.times.length);
-    const top5Medicines = sortedMedicines.slice(0, 5);
-
-    // عرض أكثر 5 أدوية استخداماً
-    topMedicines.innerHTML = top5Medicines.map(medicine => `
-        <div class="top-medicine">
-            <span class="medicine-name">${medicine.name}</span>
-            <span class="dose-count">${medicine.times.length} جرعات</span>
-        </div>
-    `).join('');
-}
-
-
 
 // تحديث قائمة الأدوية في الإعدادات
 function updateMedicineSettings() {
