@@ -1364,6 +1364,56 @@ select:focus {
     .btn:active {
         background-color: #388e3c;
     }
+
+    .screen-size-btn:active {
+        transform: scale(0.95);
+    }
+}
+
+/* أزرار حجم الشاشة */
+.screen-size-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.screen-size-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background: transparent;
+    color: var(--text-color);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.screen-size-btn i {
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+.screen-size-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.screen-size-btn.active i {
+    color: white;
+}
+
+.screen-size-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.screen-size-btn:hover i {
+    color: white;
 }
 
 /* Safe area inset for iPhone X and newer */

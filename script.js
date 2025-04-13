@@ -707,6 +707,49 @@ function updateQuantity(id, newQuantity) {
 }
 
 
+// وظيفة تغيير حجم الشاشة
+function setScreenSize(size) {
+    const root = document.documentElement;
+    const container = document.querySelector('.container');
+    
+    switch(size) {
+        case 'small':
+            root.style.setProperty('--bottom-bar-height', '50px');
+            container.style.maxWidth = '400px';
+            root.style.fontSize = '14px';
+            break;
+        case 'large':
+            root.style.setProperty('--bottom-bar-height', '70px');
+            container.style.maxWidth = '800px';
+            root.style.fontSize = '18px';
+            break;
+        default: // medium
+            root.style.setProperty('--bottom-bar-height', '60px');
+            container.style.maxWidth = '600px';
+            root.style.fontSize = '16px';
+            break;
+    }
+}
+
+// استعادة حجم الشاشة المحفوظ
+const savedSize = localStorage.getItem('screenSize') || 'medium';
+setScreenSize(savedSize);
+
+// تفعيل أزرار حجم الشاشة
+document.querySelectorAll('.screen-size-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // إزالة التنشيط من جميع الأزرار
+        document.querySelectorAll('.screen-size-btn').forEach(btn => btn.classList.remove('active'));
+        // تنشيط الزر المحدد
+        button.classList.add('active');
+        // تطبيق حجم الشاشة
+        const size = button.dataset.size;
+        setScreenSize(size);
+        // حفظ حجم الشاشة المحدد
+        localStorage.setItem('screenSize', size);
+    });
+});
+
 // إعداد أزرار الألوان
 document.querySelectorAll('.theme-color').forEach(button => {
     const theme = button.dataset.theme;
