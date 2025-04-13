@@ -7,6 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#4CAF50">
     <title>متابعة الأدوية</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
     
     <!-- PWA Support -->
     <link rel="manifest" href="manifest.json">
@@ -23,6 +25,28 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        .quantity-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .quantity-input input[type="number"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+        }
+
+        .quantity-input select {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: #fff;
+        }
+    </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <meta name="description" content="تطبيق لمتابعة مواعيد الأدوية والجرعات">
 </head>
@@ -30,15 +54,124 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-pills"></i> متابعة الأدوية</h1>
-            <button id="addMedicineBtn" class="btn-primary">
-                <i class="fas fa-plus"></i> إضافة دواء جديد
-            </button>
+            <div class="header-buttons">
+            </div>
         </header>
 
         <main>
             <!-- قائمة الأدوية -->
-            <div class="medicines-list" id="medicinesList">
-                <!-- سيتم إضافة البطاقات هنا عبر JavaScript -->
+            <div class="view-content" id="medicinesView">
+                <div class="medicines-list" id="medicinesList">
+                    <!-- سيتم إضافة البطاقات هنا عبر JavaScript -->
+                </div>
+            </div>
+
+            <!-- قسم التقويم -->
+            <div class="view-content" id="calendarView" style="display: none;">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h2>تقويم الأدوية</h2>
+                        <div class="calendar-nav">
+                            <button id="prevMonth" class="btn-secondary"><i class="fas fa-chevron-right"></i></button>
+                            <span id="currentMonth"></span>
+                            <button id="nextMonth" class="btn-secondary"><i class="fas fa-chevron-left"></i></button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- أيام الأسبوع -->
+                        <div class="calendar-weekday">الأحد</div>
+                        <div class="calendar-weekday">الإثنين</div>
+                        <div class="calendar-weekday">الثلاثاء</div>
+                        <div class="calendar-weekday">الأربعاء</div>
+                        <div class="calendar-weekday">الخميس</div>
+                        <div class="calendar-weekday">الجمعة</div>
+                        <div class="calendar-weekday">السبت</div>
+                        <!-- سيتم إضافة أيام التقويم هنا -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم التقارير -->
+            <div class="view-content" id="reportsView" style="display: none;">
+                <div class="reports-container">
+                    <h2>تقارير الأدوية</h2>
+                    <div class="report-cards">
+                        <div class="report-card">
+                            <h3>إحصائيات الشهر</h3>
+                            <div id="monthlyStats" class="stats-container">
+                                <!-- سيتم إضافة الإحصائيات هنا -->
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <h3>الأدوية الأكثر استخداماً</h3>
+                            <div id="topMedicines" class="stats-container">
+                                <!-- سيتم إضافة الإحصائيات هنا -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم الكميات -->
+            <div class="view-content" id="quantityView" style="display: none;">
+                <div class="quantity-container">
+                    <h2>كميات الأدوية</h2>
+                    <div id="medicineQuantityList"></div>
+                </div>
+            </div>
+
+            <!-- قسم الإعدادات -->
+            <div class="view-content" id="settingsView" style="display: none;">
+                <div class="settings-container">
+                    <div class="settings-header">
+                        <h2>الإعدادات</h2>
+                    </div>
+                    <div class="settings-content">
+                        <div class="settings-section">
+                            <h3>الأدوية</h3>
+                            <div id="medicineSettings" class="medicine-settings">
+                                <!-- سيتم إضافة قائمة الأدوية هنا -->
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>المظهر</h3>
+                            <div class="settings-item">
+                                <span>لون الخلفية</span>
+                                <div class="theme-colors">
+                                    <button class="theme-color" data-gradient="linear-gradient(135deg, #00b4db, #0083b0)">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </button>
+                                    <button class="theme-color" data-gradient="linear-gradient(135deg, #ff6b6b, #ee0979)">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </button>
+                                    <button class="theme-color" data-gradient="linear-gradient(135deg, #56ab2f, #a8e063)">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </button>
+                                    <button class="theme-color" data-gradient="linear-gradient(135deg, #614385, #516395)">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>عام</h3>
+                            <div class="settings-item">
+                                <span>إصدار التطبيق</span>
+                                <span>1.0.0</span>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>المساعدة</h3>
+                            <div class="help-content">
+                                <p>للتواصل مع الدعم الفني:</p>
+                                <div class="contact-info">
+                                    <i class="fas fa-envelope"></i>
+                                    <a href="mailto:buyer997@hotmail.com">buyer997@hotmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- نموذج إضافة دواء جديد -->
@@ -75,9 +208,37 @@
                             </div>
                         </div>
                         
+
+
                         <div class="form-group">
                             <label for="notes">ملاحظات</label>
                             <textarea id="notes" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="soundEnabled" checked>
+                                <span>تفعيل التنبيه الصوتي</span>
+                            </label>
+                        </div>
+                        <div class="form-group sound-options" id="soundOptions">
+                            <label for="soundType">نوع التنبيه</label>
+                            <select id="soundType" class="sound-select">
+                                <option value="beep">صفير</option>
+                                <option value="bell">جرس</option>
+                                <option value="chime">رنين</option>
+                                <option value="ding">جرس قصير</option>
+                                <option value="notification">تنبيه</option>
+                                <option value="alert">تنبيه مهم</option>
+                                <option value="soft">صوت ناعم</option>
+                                <option value="melody">لحن</option>
+                                <option value="crystal">كريستال</option>
+                                <option value="digital">رقمي</option>
+                            </select>
+                            <button type="button" class="btn-secondary test-sound" onclick="testSound()">
+                                <i class="fas fa-play"></i>
+                                تجربة الصوت
+                            </button>
                         </div>
                         
                         <div class="form-buttons">
@@ -87,8 +248,65 @@
                     </form>
                 </div>
             </div>
+
+            <!-- نموذج الإعدادات -->
+            <div class="modal" id="settingsModal">
+                <div class="modal-content">
+                    <h2>الإعدادات</h2>
+                    <form id="settingsForm">
+                        <div class="form-group">
+                            <label for="notificationSound">صوت التنبيه</label>
+                            <select id="notificationSound">
+                                <option value="notification.mp3">الصوت الافتراضي</option>
+                                <option value="notification2.mp3">صوت 2</option>
+                                <option value="notification3.mp3">صوت 3</option>
+                            </select>
+                            <button type="button" class="btn-secondary" id="testSound">
+                                <i class="fas fa-play"></i> تجربة الصوت
+                            </button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="backgroundColor">لون الخلفية</label>
+                            <input type="color" id="backgroundColor" value="#ffffff">
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="submit" class="btn-primary">حفظ</button>
+                            <button type="button" class="btn-secondary" id="cancelSettings">إلغاء</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- زر الإضافة العائم -->
+            <button id="addMedicineBtn" class="floating-add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
         </main>
+
+        <!-- شريط التنقل السفلي -->
+        <nav class="bottom-nav">
+            <a href="#" class="bottom-nav-item active" data-view="medicinesView">
+                <i class="fas fa-pills"></i>
+                <span>الأدوية</span>
+            </a>
+
+            <a href="#" class="bottom-nav-item" data-view="reportsView">
+                <i class="fas fa-chart-bar"></i>
+                <span>التقارير</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-view="quantityView">
+                <i class="fas fa-pills"></i>
+                <span>الكميات</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-view="settingsView">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+            </a>
+        </nav>
     </div>
+
     <script src="script.js"></script>
     <script>
         // تسجيل Service Worker
