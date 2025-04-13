@@ -722,6 +722,9 @@ document.querySelectorAll('.theme-color').forEach(button => {
         // تطبيق التدرج اللوني على الخلفية
         document.documentElement.style.setProperty('--gradient-background', gradient);
         
+        // إعادة تطبيق الخلفية للتأكد من التغيير
+        document.body.style.background = gradient;
+        
         // حفظ التفضيل في localStorage
         localStorage.setItem('theme-gradient', gradient);
     });
@@ -731,6 +734,7 @@ document.querySelectorAll('.theme-color').forEach(button => {
 const savedGradient = localStorage.getItem('theme-gradient');
 if (savedGradient) {
     document.documentElement.style.setProperty('--gradient-background', savedGradient);
+    document.body.style.background = savedGradient;
     const activeButton = document.querySelector(`[data-gradient="${savedGradient}"]`);
     if (activeButton) {
         activeButton.classList.add('active');
