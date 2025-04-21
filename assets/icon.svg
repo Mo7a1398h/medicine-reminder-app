@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="512" cy="512" r="460" fill="#4CAF50"/>
+  
+  <!-- Pill Shape -->
+  <path d="M512 280C405.6 280 320 365.6 320 472C320 578.4 405.6 664 512 664C618.4 664 704 578.4 704 472C704 365.6 618.4 280 512 280ZM512 616C432.8 616 368 551.2 368 472C368 392.8 432.8 328 512 328C591.2 328 656 392.8 656 472C656 551.2 591.2 616 512 616Z" fill="white"/>
+  
+  <!-- Clock Hands -->
+  <path d="M512 400V472L584 544" stroke="white" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Plus Symbol -->
+  <path d="M512 180V220M512 804V844M180 512H220M804 512H844" stroke="white" stroke-width="32" stroke-linecap="round"/>
+</svg>
